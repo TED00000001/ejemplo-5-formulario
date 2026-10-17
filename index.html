@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejemplo 5 - Formularios claros | ejemplo-5-formulario</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #F5F5F5; color: #1F1F1F; margin: 0; padding: 20px; }
+    .comparar { display: flex; flex-wrap: wrap; gap: 20px; }
+    .tarjeta { background: white; border-radius: 10px; padding: 16px; width: 320px; }
+    .mal { border-top: 8px solid #B3261E; }
+    .bien { border-top: 8px solid #2E7D32; }
+    label { display: block; font-weight: bold; margin-bottom: 4px; }
+    input { width: 100%; box-sizing: border-box; font-size: 18px; padding: 10px; border: 1px solid #767676; border-radius: 6px; }
+    button { font-size: 18px; padding: 10px 16px; margin-top: 12px; cursor: pointer; }
+    .ayuda { color: #595959; margin: 0 0 6px; }
+    .con-error { border: 3px solid #B3261E; }
+    .error { color: #B3261E; font-weight: bold; }
+    .exito { color: #2E7D32; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <p><small>Carpeta: ejemplo-5-formulario</small></p>
+  <h1>Ejemplo 5: formularios claros</h1>
+  <p>Pulsa «Enviar» en los dos formularios sin escribir nada.</p>
+  <div class="comparar">
+    <div class="tarjeta mal">
+      <h2>Así NO</h2>
+      <input id="correo-mal" placeholder="Correo">
+      <button id="enviar-mal">Enviar</button>
+    </div>
+    <div class="tarjeta bien">
+      <h2>Así SÍ</h2>
+      <label for="correo-bien">Correo de la universidad</label>
+      <p class="ayuda" id="ayuda">Ejemplo: ana@universidad.edu.pe</p>
+      <input id="correo-bien" type="email" aria-describedby="ayuda error">
+      <p class="error" id="error"></p>
+      <button id="enviar-bien">Enviar</button>
+    </div>
+  </div>
+  <p>La tarjeta roja solo muestra un borde. La verde explica qué corregir y lleva el cursor al campo. Prueba dejarlo vacío, escribir «ana» y luego «ana@uni.edu.pe».</p>
+  <script>
+    document.getElementById('enviar-mal').addEventListener('click', function () {
+      var campo = document.getElementById('correo-mal');
+      if (campo.value === '') {
+        campo.classList.add('con-error');
+      } else {
+        campo.classList.remove('con-error');
+      }
+    });
+    document.getElementById('enviar-bien').addEventListener('click', function () {
+      var campo = document.getElementById('correo-bien');
+      var mensaje = document.getElementById('error');
+      if (campo.value === '') {
+        mensaje.textContent = 'Falta tu correo. Escríbelo para continuar.';
+        mensaje.className = 'error';
+        campo.classList.add('con-error');
+        campo.focus();
+      } else if (campo.value.indexOf('@') === -1) {
+        mensaje.textContent = 'Al correo le falta la @. Ejemplo: ana@universidad.edu.pe';
+        mensaje.className = 'error';
+        campo.classList.add('con-error');
+        campo.focus();
+      } else {
+        mensaje.textContent = '¡Listo! Datos enviados.';
+        mensaje.className = 'exito';
+        campo.classList.remove('con-error');
+      }
+    });
+  </script>
+</body>
+</html>
